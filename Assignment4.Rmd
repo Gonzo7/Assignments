@@ -1,0 +1,206 @@
+---
+title: "Assignment 4"
+author: "Gonzalo Del Carpio & Daniel Bies"
+date: "9/28/2017"
+output: html_document
+---
+
+#Data Science with R
+##Data tidying
+###  http://garrettgman.github.io/tidying/
+
+In the beginning of the article we learn that we are able to organize tabular data in many different ways. We also learn that by default, R makes one layout of data sets much easier to work with than the others.
+
+```{r}
+library(DSR)
+```
+
+
+```{r}
+table1
+```
+###Data in tables is easiest to work with if it follows three rules:
+1) Each variable has its own column.
+2) Each observation is placed in its own row.
+3) Each value is placed in its own cell.
+
+In comparison, Raw data is much harder to work with as nothing is sorted out and organized unlike tidy data.
+
+###Tidy Data works well with R because it uses vectorized programming language.
+* A data frame is a list of vectors that shows up as a table in R, when the data is tidy all the variables fall into their own vector.
+
+
+```{r}
+table1$cases
+```
+This command extracts the values of a variable in a tidy data set.
+
+
+###R makes for an easy user experience for it having the capability to take atomic vectors as input. Making it easy to manipulate data with simple codes.
+
+```{r}
+mean(table1$cases)
+table1$cases / table1$population * 10000
+
+```
+
+###Tidy data sets, make for much simpler calculations.
+For example, if we wanted to see the rate of TB cases per country we would use:
+
+```{r}
+table1$cases / table1$population * 10000
+```
+
+On the other hand if you don't have a tidy data set it makes the process for a calculation like this more complicated with more steps needed to obtain the value being sought.
+
+###The two most important functions in tidyr are gather(r) and spread()
+* These commands alter the tabular data sets while maintaining the values and relationships within the data set.
+
+###Key value pairs are another easy way to record information.
+Example:
+Ford: 200000 In this pair Ford is the key and 20000 is the value 
+
+###Spread()
+
+The spread() command turns key:value columns into a set of tidy columns.
+
+```{r}
+table2
+```
+And in order to tidy it you would simply use spread(table2, key, value) in order to condense it to tidy data.
+
+###Gather() 
+
+The gather() command does the complete opposite of the spread(), it collects a set of column names and places and places them in a single key column.
+
+###Separate()
+
+This command turns a single character column into multiple columns by splitting the values of the column wherever a separator character appears.
+
+###Unite() 
+
+The unite() command is the exact opposite of the separate() command and combines multiple columns into a single one.
+
+
+#Tidy Data
+##  http://r4ds.had.co.nz/tidy-data.html
+
+# http://r4ds.had.co.nz/transform.html
+##Data Transformation Intro
+### Dataset Descriptors
+* int stands for integers.
+
+* dbl stands for doubles, or real numbers.
+* chr stands for character vectors, or strings.
+* dttm stands for date-times (a date + a time).
+* lgl stands for logical, vectors that contain only TRUE or FALSE.
+* fctr stands for factors, which R uses to represent categorical variables with fixed possible values.
+* date stands for dates.
+
+### dplyr basics
+* Pick observations by their values (filter()).
+* Reorder the rows (arrange()).
+* Pick variables by their names (select()).
+* Create new variables with functions of existing variables (mutate()).
+* Collapse many values down to a single summary (summarise()).
+
+### Verb Usage
+All verbs work similarly:
+
+1) The first argument is a data frame.
+2) The subsequent arguments describe what to do with the data frame, using the variable names (without quotes).
+3) The result is a new data frame.
+
+## Filtering Rows With Filter()
+#### This allows you to organize observations based off their values
+
+Example:
+
+* filter(dataset, variable = x, 2nd variable = x)
+
+## Narrowing Focus Using Select()
+### Allows you to pick the data you want to see
+There are a number of helper functions you can use within select():
+
+* starts_with("abc"): matches names that begin with "abc".
+* ends_with("xyz"): matches names that end with "xyz".
+* contains("ijk"): matches names that contain "ijk".
+* matches("(.)\\1"): selects variables that match a regular expression. This one matches any variables that contain repeated characters. You'll learn more about regular expressions in strings.
+* num_range("x", 1:3) matches x1, x2 and x3.
+
+## Adding New Variables with Mutate()
+### Allows you to add new columns that are functions of existing columns
+
+* Example: mutate(dataset, (newname) = variable (+,-,/,*) variable
+
+## Grouped Summaries with Summarise()
+### Used to collapse a dataframe to one, summarized row
+
+Useful Function of summarise():
+#### Measure of Location
+* mean(x)
+* median (x)
+
+#### Measure of Spread
+* sd(x) standard deviation
+* IQR(x) interquartile range
+* mad(x) median absolute deviation
+
+#### Measures of Rank
+* min(x)
+* quantile(x, 0.25) will return value of x that is greater than 25% of values but less than other 75%
+* max(x)
+
+#### Measures of Position
+* first()
+* nth ()
+* last () 
+
+
+
+
+Example:
+* by_dest <- group_by(flights, dest)
+delay <- summarise(by_dest,
+  count = n(),
+  dist = mean(distance, na.rm = TRUE),
+  delay = mean(arr_delay, na.rm = TRUE)
+
+### Ungrouping
+* To ugroup data, use the ungroup() function 
+
+# http://rpubs.com/justmarkham/dplyr-tutorial-part-2
+## Going Deeper into dplyr
+### Choosing Columns
+Minus sign can be used to manage columns
+* select(-variable, -variable) shows data without those variables
+* select(-(variable:variable)) hides a range of columns
+* select(-contains("time")) hides columns with matching name
+ 
+## Renaming Columns
+### Do not use select()
+* Rename(x = y) will rename a variable without deleting all other variables
+ 
+## Advanced Filtering
+### Functions to help narrow the scope of data
+* filter(between(dep_time, 600, 605)) will return values between 600 & 605
+* slice() filters rows by position
+ 
+## Addings New Rows
+### Commands to be used when adding to data
+* mutate(new variable = (old variables mixed together)) creates a new variable without deleting old ones
+* transmute() works like mutate but deletes the other variables
+* add_rownames("variable") turns row names into an explicit variable
+ 
+## Grouping and Counting Variables
+### Functions to be used to help summarize data
+Summarize can be used to count the number of rows in each group:
+* Example: group_by(month) %>% summarise(cnt = n())
+* tally() and count() perform similar functions
+* sum() can be used to add up the total of a variable
+ 
+## Increasing View
+### Functions to be used to view more data
+* print(n= 15) will specify that you want to see more rows
+* view() will show up to 1000 rows and all columns
+ 
