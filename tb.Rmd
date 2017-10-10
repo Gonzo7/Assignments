@@ -1,0 +1,79 @@
+---
+title: "Assignment 5"
+author: "Gonzalo Del Carpio & Daniel Bies"
+date: "10/3/2017"
+output: html_document
+---
+
+```{r}
+library(readxl)
+tb=read_excel("tallestbuildings.xlsx")
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+names(tb)[6]="height"
+names(tb)[5]="meters"
+```
+
+```{r}
+str(tb)
+```
+
+###Regrouping the City variable with the number of buildings
+```{r}
+Citycounts=tb%>%group_by(City)%>%summarize(number=length(height))
+
+```
+
+###Plotting the City variable 
+```{r}
+ggplot(Citycounts, aes(reorder(City,-number),number))+ geom_bar(stat="identity", fill= "blue") + coord_flip()
+```
+
+
+```{r}
+Citymean=tb%>% group_by(City)%>%summarise(mean.height=mean(height))
+ggplot(Citymean,aes(reorder(City,-mean.height),mean.height)) + geom_bar(stat= "identity", fill="blue") + coord_flip()
+```
+
+
+
+```{r}
+install.packages("countrycode")
+library(countrycode)
+```
+
+```{r}
+tb=separate(tb,City, into = c("City","Country"), sep = -5)
+```
+
+Getting rid of the parentheses that surrounds the country code.
+
+```{r}
+tb$Country=gsub("[()]","", tb$Country)
+head(tb)
+```
+
+Changing the country codes to actual country names.
+
+```{r}
+tb$Country = countrycode(tb$Country,"iso2c","country.name")
+head(tb)
+```
+
+Plotting the country by number of buildings.
+
+```{r}
+Countrycounts=tb%>%group_by(Country)%>%summarize(number=length(height))
+ggplot(Countrycounts, aes(reorder(Country,-number),number))+ geom_bar(stat="identity", fill= "blue") + coord_flip()
+
+```
+
+```{r}
+Countrymean=tb%>% group_by(Country)%>%summarise(mean.height=mean(height))
+ggplot(Citymean,aes(reorder(Country,-mean.height),mean.height)) + geom_bar(stat= "identity", fill="blue") + coord_flip()
+```
+
