@@ -1,0 +1,238 @@
+---
+title: "MedicareProject"
+author: "Daniel Bies and Gonzalo Del Carpio"
+date: "October 10, 2017"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+```
+
+##### Our group was asked to look at Medicare Provider Utilization and Payment Data for health providers all around the Spokane area. The data, which was provided by the Center for Medicare & Medicaid Services, looks at different cases from health care providers with information on services and procedures provided to Medicare beneficiaries. 
+
+
+##### We decided to pose the question: Are there differences in the number of services, distinct beneficiary per day services, average medicare allowed, charged, and paid amount, and medicare standardized amount differ as a function of Gender, the Provider Type, and Place of Service?
+
+
+##### For this question we decided to break it up into separate sections, the first would be looking at the variables interacting with Gender of the health care provider, followed by Provider Type, and lastly the Place of Service.
+
+```{r}
+load("providerspokane.RDA")
+#install.packages("googleVis")
+library(googleVis)
+```
+
+#Gender Analysis
+
+##### For this dataset the "F" variable represents female health providers, and "M" for male health providers.
+
+
+```{r}
+Genderinfo=providerspokane%>%group_by(Gender.of.the.Provider)%>%summarise(services=mean(Number.of.Services), benificiary.services=mean(Number.of.Distinct.Medicare.Beneficiary.Per.Day.Services), medicare.allowed=mean(Average.Medicare.Allowed.Amount), medicare.charged=mean(Average.Submitted.Charge.Amount), medicare.paid=mean(Average.Medicare.Payment.Amount), medicare.standardized=mean(Average.Medicare.Standardized.Amount))
+```
+
+##To show that blank genders are organizations
+
+
+```{r}
+
+table(providerspokane$Gender.of.the.Provider,providerspokane$Entity.Type.of.the.Provider)
+```
+
+```{r}
+Gendernew=Genderinfo[-1,]
+```
+
+
+### Interactive GoogleVis Chart with all Variables
+
+```{r}
+
+Column=gvisColumnChart(Gendernew,options=list(width=750, height=400))
+plot(Column)
+```
+
+
+### Average number of services provided by gender
+
+
+```{r}
+
+ggplot(Gendernew, aes(Gender.of.the.Provider,services, fill=as.factor(Gender.of.the.Provider))) + geom_bar(stat="identity", position="dodge")
+```
+
+##### By looking at this bar graph, it shows that female health providers offer almost 50 more different services than male health providers. This is interesting because it could be a suggestion that there are more females in the health industry than males. Or simply, females provide more services for all patients compared to the men in the health industry.
+
+
+### Average number of benificiary services provided by gender
+
+
+```{r}
+ggplot(Gendernew, aes(Gender.of.the.Provider,benificiary.services, fill=as.factor(Gender.of.the.Provider))) + geom_bar(stat="identity", position="dodge")
+```
+
+###Average medicare allowed amount by gender
+
+
+```{r}
+ggplot(Gendernew, aes(Gender.of.the.Provider,medicare.allowed, fill=as.factor(Gender.of.the.Provider))) + geom_bar(stat="identity", position="dodge")
+```
+
+
+###Average medicare submitted charge by gender
+
+```{r}
+ggplot(Gendernew, aes(Gender.of.the.Provider,medicare.charged, fill=as.factor(Gender.of.the.Provider))) + geom_bar(stat="identity", position="dodge")
+```
+
+
+###Average medicare payment amount
+
+
+```{r}
+
+ggplot(Gendernew, aes(Gender.of.the.Provider,medicare.paid, fill=as.factor(Gender.of.the.Provider))) + geom_bar(stat="identity", position="dodge")
+```
+
+
+###Average medicare standardized amount
+
+
+```{r}
+ggplot(Gendernew, aes(Gender.of.the.Provider,medicare.standardized, fill=as.factor(Gender.of.the.Provider))) + geom_bar(stat="identity", position="dodge")
+```
+
+#####When looking at the services provided by each gender, females provide more overall services and a near equal amount of benificiary services. However, when looking at the money medicare is paying to each gender, males are receiving substanstially more money from medicare. This is interesting, and suggests that either males are more often working in more lucrative fields, or there is discrimination in pay. As far as the medicare data goes, it suggests that men work have higher amounts of medicare going to the services that they provide, which is interesting due to the fact that females are shown to have more services.
+
+#Provider Type Analysis
+
+```{r}
+ProviderTypeinfo=providerspokane%>%group_by(Provider.Type)%>%summarise(services=mean(Number.of.Services), benificiary.services=mean(Number.of.Distinct.Medicare.Beneficiary.Per.Day.Services), medicare.allowed=mean(Average.Medicare.Allowed.Amount), medicare.charged=mean(Average.Submitted.Charge.Amount), medicare.paid=mean(Average.Medicare.Payment.Amount), medicare.standardized=mean(Average.Medicare.Standardized.Amount))
+```
+
+
+###Average services provided by provider type
+
+
+```{r fig1, fig.height=8, fig.width=7}
+ggplot(ProviderTypeinfo, aes(reorder(Provider.Type,-services),services)) + geom_point(stat="identity") + ylim(0,2100) + coord_flip()
+```
+
+
+###Average benificiary Services provided by provider type
+
+
+```{r fig2, fig.height=8, fig.width=7}
+ggplot(ProviderTypeinfo, aes(reorder(Provider.Type,-benificiary.services),benificiary.services)) + geom_point(stat="identity") + ylim(0,2500) + coord_flip()
+```
+
+
+###Average medicare allowed by provider type
+
+
+```{r fig3, fig.height=8, fig.width=7}
+ggplot(ProviderTypeinfo, aes(reorder(Provider.Type,-medicare.allowed),medicare.allowed)) + geom_point(stat="identity") + ylim(0,1200) + coord_flip()
+```
+
+
+###Average medicare charged by provider type
+
+
+```{r fig4, fig.height=8, fig.width=7}
+ggplot(ProviderTypeinfo, aes(reorder(Provider.Type,-medicare.charged),medicare.charged)) + geom_point(stat="identity") + ylim(0,2700) + coord_flip()
+```
+
+
+###Average medicare paid by provider type
+
+
+```{r fig5, fig.height=8, fig.width=7}
+ggplot(ProviderTypeinfo, aes(reorder(Provider.Type,-medicare.paid),medicare.paid)) + geom_point(stat="identity") + ylim(0,1000) + coord_flip()
+```
+
+
+###Average medicare standardized by provider type
+
+
+```{r fig6, fig.height=8, fig.width=7}
+ggplot(ProviderTypeinfo, aes(reorder(Provider.Type,-medicare.standardized),medicare.standardized)) + geom_point(stat="identity") + ylim(0,900) + coord_flip()
+```
+
+##### The provider types have a similar graph for each category leading us to make the conclusion that each have similar qualities. It slowly increases as we go towards more specialized services, in which case it makes sense that medicare numbers rise since these services are typically more expensive.The main outliers in this catergory were ambulance services since they cater to so many different health situations.
+
+
+#Place of Service Analysis
+
+
+##### The Place of Service variable identifies the place of service where the claims were submitted. The "F" symbol signifies that the place of service was a Facility, while the O stands for a non-facility, which often means it was an office setting. 
+
+```{r}
+Placeinfo=providerspokane%>%group_by(Place.of.Service)%>%summarise(services=mean(Number.of.Services), benificiary.services=mean(Number.of.Distinct.Medicare.Beneficiary.Per.Day.Services), medicare.allowed=mean(Average.Medicare.Allowed.Amount), medicare.charged=mean(Average.Submitted.Charge.Amount), medicare.paid=mean(Average.Medicare.Payment.Amount), medicare.standardized=mean(Average.Medicare.Standardized.Amount))
+```
+
+```{r}
+#Interactive GoogleVis chart with all variables
+Column2=gvisColumnChart(Placeinfo,options=list(width=750, height=400))
+plot(Column2)
+```
+
+
+###Average services provided by location
+
+
+```{r}
+ggplot(Placeinfo, aes(Place.of.Service,services, fill=as.factor(Place.of.Service))) + geom_bar(stat="identity", position="dodge") + scale_fill_brewer(palette = "Set2")
+```
+
+
+###Average benificiary services provided by location
+
+
+```{r}
+ggplot(Placeinfo, aes(Place.of.Service,benificiary.services, fill=as.factor(Place.of.Service))) + geom_bar(stat="identity", position="dodge") + scale_fill_brewer(palette = "Set2")
+```
+
+
+###Average medicare allowed by location 
+
+
+```{r}
+ggplot(Placeinfo, aes(Place.of.Service,medicare.allowed, fill=as.factor(Place.of.Service))) + geom_bar(stat="identity", position="dodge") + scale_fill_brewer(palette = "Set2")
+```
+
+
+###Average medicare charged by location 
+
+
+```{r}
+ggplot(Placeinfo, aes(Place.of.Service,medicare.charged, fill=as.factor(Place.of.Service))) + geom_bar(stat="identity", position="dodge") + scale_fill_brewer(palette = "Set2")
+```
+
+
+###Average medicare paid by location
+
+
+```{r}
+ggplot(Placeinfo, aes(Place.of.Service,medicare.paid, fill=as.factor(Place.of.Service))) + geom_bar(stat="identity", position="dodge") + scale_fill_brewer(palette = "Set2")
+```
+
+
+###Average medicare standardized by location
+
+
+```{r}
+
+ggplot(Placeinfo, aes(Place.of.Service,medicare.standardized, fill=as.factor(Place.of.Service))) + geom_bar(stat="identity", position="dodge") + scale_fill_brewer(palette = "Set2")
+```
+
+
+##### By looking at the graphs we can see that Facilities lead the medicare variables which is not a surprise since facilities encompasses many health care providers and amount to more money spent. However when looking at services and beneficiary services, the independent places of services led by a great amount. We believed this to be because they specialize in specific services.
