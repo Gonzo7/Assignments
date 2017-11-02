@@ -152,14 +152,14 @@ facetchart$Values=as.numeric(facetchart$Values)</code></pre>
 </div>
 <div id="the-plot-below-shows-the-cities-from-the-dataset-plotted-over-a-map-of-the-us." class="section level3">
 <h3>The plot below shows the cities from the dataset, plotted over a map of the US.</h3>
-<pre class="r"><code>Geo=gvisGeoChart(bcities, &quot;latlong&quot;, colorvar = &quot;Rank&quot;, options = list(region=&quot;US&quot;, dataMode= &quot;markers&quot;,resolution= &quot;provinces&quot;, width= 800, height=800, sizeAxis = &#39;{minValue: 1,  maxSize: 3}&#39;))
+<pre class="r"><code>Geo=gvisGeoChart(bcities, &quot;latlong&quot;, &quot;Rank&quot;, options = list(region=&quot;US&quot;, dataMode= &quot;markers&quot;,resolution= &quot;provinces&quot;, width= 800, height=800, sizeAxis = &#39;{minValue: 1,  maxSize: 3}&#39;))
 Geo</code></pre>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>
-GeoChartID1a96107e88ee
+GeoChartID1c575985b99c
 </title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <style type="text/css">
@@ -175,12 +175,12 @@ body {
 </style>
 </head>
 <body>
-<p><!-- GeoChart generated in R 3.4.1 by googleVis 0.6.2 package --> <!-- Thu Nov  2 11:28:06 2017 --></p>
+<p><!-- GeoChart generated in R 3.4.1 by googleVis 0.6.2 package --> <!-- Thu Nov  2 12:45:01 2017 --></p>
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataGeoChartID1a96107e88ee () {
+function gvisDataGeoChartID1c575985b99c () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -443,8 +443,8 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartGeoChartID1a96107e88ee() {
-var data = gvisDataGeoChartID1a96107e88ee();
+function drawChartGeoChartID1c575985b99c() {
+var data = gvisDataGeoChartID1c575985b99c();
 var options = {};
 options["width"] = 800;
 options["height"] = 800;
@@ -454,7 +454,7 @@ options["resolution"] = "provinces";
 options["sizeAxis"] = {minValue: 1,  maxSize: 3};
 
     var chart = new google.visualization.GeoChart(
-    document.getElementById('GeoChartID1a96107e88ee')
+    document.getElementById('GeoChartID1c575985b99c')
     );
     chart.draw(data,options);
     
@@ -478,9 +478,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartGeoChartID1a96107e88ee);
+callbacks.push(drawChartGeoChartID1c575985b99c);
 })();
-function displayChartGeoChartID1a96107e88ee() {
+function displayChartGeoChartID1c575985b99c() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -503,13 +503,13 @@ callbacks.shift()();
 // jsFooter
 </script>
 <!-- jsChart -->
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartGeoChartID1a96107e88ee"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartGeoChartID1c575985b99c"></script>
 <!-- divChart -->
-<div id="GeoChartID1a96107e88ee" style="width: 800; height: 800;">
+<div id="GeoChartID1c575985b99c" style="width: 800; height: 800;">
 
 </div>
 <div>
-<span>Data: bcities • Chart ID: <a href="Chart_GeoChartID1a96107e88ee.html">GeoChartID1a96107e88ee</a> • <a href="https://github.com/mages/googleVis">googleVis-0.6.2</a></span><br /> <!-- htmlFooter --> <span> R version 3.4.1 (2017-06-30) • <a href="https://developers.google.com/terms/">Google Terms of Use</a> • <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/geochart">Documentation and Data Policy</a> </span>
+<span>Data: bcities • Chart ID: <a href="Chart_GeoChartID1c575985b99c.html">GeoChartID1c575985b99c</a> • <a href="https://github.com/mages/googleVis">googleVis-0.6.2</a></span><br /> <!-- htmlFooter --> <span> R version 3.4.1 (2017-06-30) • <a href="https://developers.google.com/terms/">Google Terms of Use</a> • <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/geochart">Documentation and Data Policy</a> </span>
 </div>
 </body>
 </html>
@@ -535,7 +535,7 @@ States</code></pre>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>
-GeoChartID1a9667044996
+GeoChartID1c5730fefb4d
 </title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <style type="text/css">
@@ -551,12 +551,12 @@ body {
 </style>
 </head>
 <body>
-<p><!-- GeoChart generated in R 3.4.1 by googleVis 0.6.2 package --> <!-- Thu Nov  2 11:28:06 2017 --></p>
+<p><!-- GeoChart generated in R 3.4.1 by googleVis 0.6.2 package --> <!-- Thu Nov  2 12:45:01 2017 --></p>
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataGeoChartID1a9667044996 () {
+function gvisDataGeoChartID1c5730fefb4d () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -688,8 +688,8 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartGeoChartID1a9667044996() {
-var data = gvisDataGeoChartID1a9667044996();
+function drawChartGeoChartID1c5730fefb4d() {
+var data = gvisDataGeoChartID1c5730fefb4d();
 var options = {};
 options["width"] = 800;
 options["height"] = 800;
@@ -698,7 +698,7 @@ options["displayMode"] = "regions";
 options["resolution"] = "provinces";
 
     var chart = new google.visualization.GeoChart(
-    document.getElementById('GeoChartID1a9667044996')
+    document.getElementById('GeoChartID1c5730fefb4d')
     );
     chart.draw(data,options);
     
@@ -722,9 +722,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartGeoChartID1a9667044996);
+callbacks.push(drawChartGeoChartID1c5730fefb4d);
 })();
-function displayChartGeoChartID1a9667044996() {
+function displayChartGeoChartID1c5730fefb4d() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -747,13 +747,13 @@ callbacks.shift()();
 // jsFooter
 </script>
 <!-- jsChart -->
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartGeoChartID1a9667044996"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartGeoChartID1c5730fefb4d"></script>
 <!-- divChart -->
-<div id="GeoChartID1a9667044996" style="width: 800; height: 800;">
+<div id="GeoChartID1c5730fefb4d" style="width: 800; height: 800;">
 
 </div>
 <div>
-<span>Data: Countstate • Chart ID: <a href="Chart_GeoChartID1a9667044996.html">GeoChartID1a9667044996</a> • <a href="https://github.com/mages/googleVis">googleVis-0.6.2</a></span><br /> <!-- htmlFooter --> <span> R version 3.4.1 (2017-06-30) • <a href="https://developers.google.com/terms/">Google Terms of Use</a> • <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/geochart">Documentation and Data Policy</a> </span>
+<span>Data: Countstate • Chart ID: <a href="Chart_GeoChartID1c5730fefb4d.html">GeoChartID1c5730fefb4d</a> • <a href="https://github.com/mages/googleVis">googleVis-0.6.2</a></span><br /> <!-- htmlFooter --> <span> R version 3.4.1 (2017-06-30) • <a href="https://developers.google.com/terms/">Google Terms of Use</a> • <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/geochart">Documentation and Data Policy</a> </span>
 </div>
 </body>
 </html>

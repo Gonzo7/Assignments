@@ -23,13 +23,13 @@ bcities=gudatavizfa17::bcities
 #Introduction
 ## We were provided with data from Bloomberg's ranking of the top cities in the country. We analyzed this data and presented it below.
 
-```{r results='asis'}
+```{r}
 facetchart=gather(bcities, "Variable", "Values", 1,3:13)
 facetchart=facetchart[facetchart$Variable!="City",]
 facetchart$Values=as.numeric(facetchart$Values)
 ```
 
-```{r results='asis'}
+```{r}
 ggplot(facetchart,aes(x=Rank, y=Values)) + geom_point(size=.5)+facet_wrap(~Variable, scales = "free") + geom_smooth(method="lm") + labs(list(title= "Variable Correlation with City Rank", x="Rank", y="Variable"))
 ```
 
@@ -40,16 +40,15 @@ ggplot(facetchart,aes(x=Rank, y=Values)) + geom_point(size=.5)+facet_wrap(~Varia
 
 ###To make the latitude and longitude compatible for plotting the cities, a separating function was used.
 
-```{r results='asis'}
+```{r}
 bcities$latlong=paste(bcities$lat,bcities$lon,sep=":")
-
 ```
 
 
 ###The plot below shows the cities from the dataset, plotted over a map of the US. 
 
 ```{r results= "asis"}
-Geo=gvisGeoChart(bcities, "latlong", colorvar = "Rank", options = list(region="US", dataMode= "markers",resolution= "provinces", width= 800, height=800, sizeAxis = '{minValue: 1,  maxSize: 3}'))
+Geo=gvisGeoChart(bcities, "latlong", "Rank", options = list(region="US", dataMode= "markers",resolution= "provinces", width= 800, height=800, sizeAxis = '{minValue: 1,  maxSize: 3}'))
 Geo
 ```
 
